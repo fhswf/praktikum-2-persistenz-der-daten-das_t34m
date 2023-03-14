@@ -18,9 +18,10 @@ export default class DB {
         return collection.find().toArray();
     }
 
-    queryById(id) {      
-        const response = {_id: new ObjectId(id)};
-        return collection.findOne(id);
+    queryById(id) {
+        const filter = { _id: new ObjectId(id) }
+        console.log(filter);
+        return collection.findOne(filter);
         // TODO: Implement queryById
     }
 

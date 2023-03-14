@@ -1,5 +1,4 @@
 import express from 'express';
-import { Collection, ObjectId } from 'mongodb';
 import DB from './db.js'
 
 const PORT = process.env.PORT || 3000;
@@ -27,10 +26,8 @@ app.get('/todos', async (req, res) => {
 });
 
 app.get('/todos/:id', async (req, res) => {
-    const data = await db.queryById(req.params.id)
-    res.send(data);
-
-
+    let todo = await db.queryById(req.params.id);
+    res.send(todo);
 });
 
 //
