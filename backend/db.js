@@ -20,7 +20,6 @@ export default class DB {
 
     queryById(id) {
         const filter = { _id: new ObjectId(id) }
-        console.log(filter);
         return collection.findOne(filter);
         // TODO: Implement queryById
     }
