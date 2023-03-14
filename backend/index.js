@@ -16,20 +16,6 @@ async function initDB() {
 }
 
 // implement API routes
-
-/** Return all todos. 
- *  Be aware that the db methods return promises, so we need to use either `await` or `then` here! 
- */
-app.get('/todos', async (req, res) => {
-    let todos = await db.queryAll();
-    res.send(todos);
-});
-
-app.get('/todos/:id', async (req, res) => {
-    let todo = await db.queryById(req.params.id);
-    res.send(todo);
-});
-
 //
 // YOUR CODE HERE
 //
@@ -39,6 +25,30 @@ app.get('/todos/:id', async (req, res) => {
 // PUT /todos/:id
 // DELETE /todos/:id
 
+/** Return all todos. 
+ *  Be aware that the db methods return promises, so we need to use either `await` or `then` here! 
+ */
+app.get('/todos', async (req, res) => {
+    let todos = await db.queryAll();
+    res.send(todos);
+});
+
+/**
+ * Return only one of all todos
+ */
+app.get('/todos/:id', async (req, res) => {
+    let todo = await db.queryById(req.params.id);
+    res.send(todo);
+});
+
+/**
+ * Creates new todo and add it to database
+ */
+app.post('/test', (req, res) => {
+    console.log(req.body.title);
+    res.end();
+
+});
 
 initDB()
     .then(() => {

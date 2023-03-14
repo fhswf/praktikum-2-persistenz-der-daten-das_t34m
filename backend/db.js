@@ -21,7 +21,6 @@ export default class DB {
     queryById(id) {
         const filter = { _id: new ObjectId(id) }
         return collection.findOne(filter);
-        // TODO: Implement queryById
     }
 
     update(id, order) {
@@ -33,6 +32,7 @@ export default class DB {
     }
 
     insert(order) {
+        console.log(order);
         // TODO: Implement insert
     }
 }
