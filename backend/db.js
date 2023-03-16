@@ -11,7 +11,7 @@ export default class DB {
             .then(function (client) {
                 db = client.db(MONGO_DB);
                 collection = db.collection('todos');
-            })
+            });
     }
 
     queryAll() {
@@ -32,7 +32,7 @@ export default class DB {
     }
 
     insert(order) {
-        console.log(order);
-        // TODO: Implement insert
+        let collection = db.collection(MONGO_DB);
+        return collection.insertOne(order);
     }
 }

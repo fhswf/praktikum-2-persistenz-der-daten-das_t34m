@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 3000;
 
 /** Zentrales Objekt für unsere Express-Applikation */
 const app = express();
+app.use(express.json());
 
 /** global instance of our database */
 let db = new DB();
@@ -44,10 +45,15 @@ app.get('/todos/:id', async (req, res) => {
 /**
  * Creates new todo and add it to database
  */
-app.post('/test', (req, res) => {
-    console.log(req.body.title);
-    res.end();
-
+app.post('/todos', async (req, res) => {
+    const {title, due, status} = req.body;
+    const data  = {
+        "title": title,
+        "due": due,
+        "status": status
+    };
+    const insert = await db.insert(data);
+    res.send(insert);
 });
 
 initDB()
