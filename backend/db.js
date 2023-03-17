@@ -19,12 +19,15 @@ export default class DB {
     }
 
     queryById(id) {
-        const filter = { _id: new ObjectId(id) }
+        const filter = { _id: new ObjectId(id) };
         return collection.findOne(filter);
     }
 
     update(id, order) {
-        // TODO: Implement update
+        const filter = { _id: new ObjectId(id) };
+        const modify = collection.findOne(filter);
+        console.log(`destination: ${modify.toArray}`);
+
     }
 
     delete(id) {
@@ -32,7 +35,7 @@ export default class DB {
     }
 
     insert(order) {
-        let collection = db.collection(MONGO_DB);
+        const collection = db.collection(MONGO_DB);
         return collection.insertOne(order);
     }
 }

@@ -1,4 +1,5 @@
 import express from 'express';
+import { ObjectId } from 'mongodb';
 import DB from './db.js'
 
 const PORT = process.env.PORT || 3000;
@@ -38,7 +39,7 @@ app.get('/todos', async (req, res) => {
  * Return only one of all todos
  */
 app.get('/todos/:id', async (req, res) => {
-    let todo = await db.queryById(req.params.id);
+    const todo = await db.queryById(req.params.id);
     res.send(todo);
 });
 
@@ -46,14 +47,23 @@ app.get('/todos/:id', async (req, res) => {
  * Creates new todo and add it to database
  */
 app.post('/todos', async (req, res) => {
-    const {title, due, status} = req.body;
-    const data  = {
+    const { title, due, status } = req.body;
+    const doc = {
         "title": title,
         "due": due,
         "status": status
     };
-    const insert = await db.insert(data);
+    const insert = await db.insert(doc);
     res.send(insert);
+});
+
+app.put('/todos/:id', async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    console.log(`req.body.put ${req.body}`);
+    const test = await db.update(id, data);
+    console.log(test);
+    res.end();
 });
 
 initDB()
