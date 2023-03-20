@@ -16,16 +16,6 @@ async function initDB() {
     console.log("Connected to database");
 }
 
-// implement API routes
-//
-// YOUR CODE HERE
-//
-// Implement the following routes:
-// GET /todos/:id
-// POST /todos
-// PUT /todos/:id
-// DELETE /todos/:id
-
 /** Return all todos. 
  *  Be aware that the db methods return promises, so we need to use either `await` or `then` here! 
  */
@@ -46,32 +36,23 @@ app.get('/todos/:id', async (req, res) => {
  * Creates new todo and add it to database
  */
 app.post('/todos', async (req, res) => {
-    const { title, due, status } = req.body;
-    const doc = {
-        "title": title,
-        "due": due,
-        "status": status
-    };
-
-    const insert = await db.insert(doc);
-    
+    const insert = await db.insert(req.body);
     res.send(insert);
 });
 
+/**
+ * Modify single document
+ */
 app.put('/todos/:id', async (req, res) => {
-    const id = req.params.id;
-    const data = req.body;
-
-    const update = await db.update(id, data);
-    
+    const update = await db.update(req.params.id, req.body);    
     res.send(update);
 });
 
+/**
+ * Delete single document
+ */
 app.delete('/todos/:id', async (req, res) => {
-    const id = req.params.id;
-
-    const del = await db.delete(id);
-
+    const del = await db.delete(req.params.id);
     res.send(del);
 });
 
