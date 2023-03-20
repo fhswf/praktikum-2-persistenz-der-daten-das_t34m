@@ -1,5 +1,4 @@
 import express from 'express';
-import { ObjectId } from 'mongodb';
 import DB from './db.js'
 
 const PORT = process.env.PORT || 3000;
@@ -53,17 +52,27 @@ app.post('/todos', async (req, res) => {
         "due": due,
         "status": status
     };
+
     const insert = await db.insert(doc);
+    
     res.send(insert);
 });
 
 app.put('/todos/:id', async (req, res) => {
     const id = req.params.id;
     const data = req.body;
-    console.log(`req.body.put ${req.body}`);
-    const test = await db.update(id, data);
-    console.log(test);
-    res.end();
+
+    const update = await db.update(id, data);
+    
+    res.send(update);
+});
+
+app.delete('/todos/:id', async (req, res) => {
+    const id = req.params.id;
+
+    const del = await db.delete(id);
+
+    res.send(del);
 });
 
 initDB()

@@ -25,17 +25,26 @@ export default class DB {
 
     update(id, order) {
         const filter = { _id: new ObjectId(id) };
-        const modify = collection.findOne(filter);
-        console.log(`destination: ${modify.toArray}`);
+        const { title, due, status } = order;
 
-    }
+        const todo = {
+            $set: {
+                "title": title,
+                "due": due,
+                "status": status
+            }
+        };
+
+        return collection.updateOne(filter, todo);
+    };
 
     delete(id) {
-        // TODO: Implement delete
-    }
+        const filter = { _id: new ObjectId(id) };
+        return collection.deleteOne(filter);
+    };
 
     insert(order) {
         const collection = db.collection(MONGO_DB);
         return collection.insertOne(order);
-    }
+    };
 }
